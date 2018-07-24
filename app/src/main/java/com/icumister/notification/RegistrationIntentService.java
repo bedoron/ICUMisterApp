@@ -8,7 +8,7 @@ import android.util.Log;
 
 import com.google.android.gms.gcm.GoogleCloudMessaging;
 import com.google.android.gms.iid.InstanceID;
-import com.icumister.MainActivity;
+import com.icumister.activities.MainActivity;
 import com.microsoft.windowsazure.messaging.NotificationHub;
 
 public class RegistrationIntentService extends IntentService {

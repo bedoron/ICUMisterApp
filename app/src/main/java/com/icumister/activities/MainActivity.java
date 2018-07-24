@@ -1,4 +1,4 @@
-package com.icumister;
+package com.icumister.activities;
 
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
@@ -149,11 +149,16 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    public void startAddYouselfActivity(View view) {
+        Intent addYourselfIntent = new Intent(this, AddYourselfActivity.class);
+        startActivity(addYourselfIntent);
+    }
+
     private class NotifParams {
         private String notificationChannelDescription = "Default";
         private boolean enableLights = true;
         private int lightColor = Color.RED;
         private boolean enableVibration = true;
-        private long[] vibrationPattern = new long[]{100, 100, 100, 300, 300, 300, 100 ,100, 100};
+        private long[] vibrationPattern = new long[]{100, 100, 100, 300, 300, 300, 100, 100, 100};
     }
 }

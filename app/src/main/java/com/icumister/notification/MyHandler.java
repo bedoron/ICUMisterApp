@@ -10,8 +10,8 @@ import android.os.Bundle;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 
+import com.icumister.activities.MainActivity;
 import com.icumister.AppState;
-import com.icumister.MainActivity;
 import com.icumister.icumisterapp.R;
 import com.microsoft.windowsazure.notifications.NotificationsHandler;
 
@@ -33,11 +33,11 @@ public class MyHandler extends NotificationsHandler {
             if(NotificationFilter.matchedNotification(notification)) {
                 sendNotification(notification);
                 MainActivity.mainActivity.ToastNotify("Received a notification for " + notification.getNotifType().toString());
-            }
+        }
             else {
                 bundle.clear();
                 Log.w("MyHandler", "Received filtered notification");
-            }
+    }
         } catch(Exception e) {
             Log.e("MyHandler", "Received illegal notification", e);
         }
