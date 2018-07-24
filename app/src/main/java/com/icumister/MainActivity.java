@@ -9,17 +9,22 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
+import com.icumister.icumisterapp.NotificationFiltersActivity;
 import com.icumister.icumisterapp.R;
+import com.icumister.icumisterapp.SettingsActivity;
 import com.icumister.notification.Constants;
 import com.icumister.notification.MyHandler;
 import com.icumister.notification.NotificationSettings;
 import com.icumister.notification.RegistrationIntentService;
 import com.microsoft.windowsazure.notifications.NotificationsManager;
+
+import java.util.Set;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -41,6 +46,11 @@ public class MainActivity extends AppCompatActivity {
 
     private NotifParams getNotificationChannelParameters() {
         return new NotifParams();
+    }
+
+    public void openSettingsActivity(View view) {
+        Intent intent = new Intent(MainActivity.this, SettingsActivity.class);
+        startActivity(intent);
     }
 
     private void setupNotificationChannel(NotifParams notificationParameters) {
@@ -129,7 +139,7 @@ public class MainActivity extends AppCompatActivity {
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                Toast.makeText(MainActivity.this, notificationMessage, Toast.LENGTH_LONG).show();
+                //Toast.makeText(MainActivity.this, notificationMessage, Toast.LENGTH_LONG).show();
                 TextView helloText = findViewById(R.id.text_hello);
                 helloText.setText(notificationMessage);
             }

@@ -18,6 +18,20 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <activity
+            android:name="com.icumister.icumisterapp.NotificationFiltersActivity"
+            android:label="Notifications settings"
+            android:parentActivityName="com.icumister.icumisterapp.SettingsActivity">
+        </activity>
+
+        <activity
+            android:name="com.icumister.icumisterapp.SettingsActivity"
+            android:label="Settings"
+            android:parentActivityName="com.icumister.MainActivity">
+        </activity>
+
+
         <meta-data android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
         <service android:name="com.icumister.notification.MyInstanceIDService" android:exported="false">
