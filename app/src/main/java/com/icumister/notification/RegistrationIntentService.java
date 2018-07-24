@@ -24,21 +24,19 @@ public class RegistrationIntentService extends IntentService {
     @Override
     protected void onHandleIntent(Intent intent) {
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
-        String resultString = null;
-        String regID = null;
+        String resultString;
 
         try {
             InstanceID instanceID = InstanceID.getInstance(this);
-            String token = instanceID.getToken(NotificationSettings.SenderId,
-                    GoogleCloudMessaging.INSTANCE_ID_SCOPE);
+            String token = instanceID.getToken(NotificationSettings.SenderId, GoogleCloudMessaging.INSTANCE_ID_SCOPE);
             Log.i(TAG, "Got GCM Registration Token: " + token);
 
             // Storing the registration id that indicates whether the generated token has been
             // sent to your server. If it is not stored, send the token to your server,
             // otherwise your server should have already received the token.
+            String regID;
             if ((regID = sharedPreferences.getString("registrationID", null)) == null) {
-                NotificationHub hub = new NotificationHub(NotificationSettings.HubName,
-                        NotificationSettings.HubListenConnectionString, this);
+                hub = new NotificationHub(NotificationSettings.HubName, NotificationSettings.HubListenConnectionString, this);
                 Log.i(TAG, "Attempting to register with NH using token : " + token);
 
                 regID = hub.register(token).getRegistrationId();

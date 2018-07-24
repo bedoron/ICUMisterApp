@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">ICUMisterApp</string>
+    <string name="notification_channel_name">ICUMister notifications</string>
+    <string name="notification_channel_description">Notifications from ICUMister server</string>
 </resources>

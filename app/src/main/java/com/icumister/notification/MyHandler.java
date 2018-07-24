@@ -15,9 +15,7 @@ import com.microsoft.windowsazure.notifications.NotificationsHandler;
 
 public class MyHandler extends NotificationsHandler {
 
-    public static final int NOTIFICATION_ID = 1;
     private NotificationManager mNotificationManager;
-    NotificationCompat.Builder builder;
     Context ctx;
 
     @Override
@@ -43,7 +41,7 @@ public class MyHandler extends NotificationsHandler {
 
         Uri defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
         NotificationCompat.Builder mBuilder =
-                new NotificationCompat.Builder(ctx)
+                new NotificationCompat.Builder(ctx, Constants.NOTIFICATION_CHANNEL_ID)
                         .setSmallIcon(R.mipmap.ic_launcher)
                         .setContentTitle("Notification Hub Demo")
                         .setStyle(new NotificationCompat.BigTextStyle()
@@ -52,6 +50,6 @@ public class MyHandler extends NotificationsHandler {
                         .setContentText(msg);
 
         mBuilder.setContentIntent(contentIntent);
-        mNotificationManager.notify(NOTIFICATION_ID, mBuilder.build());
+        mNotificationManager.notify(Constants.NOTIFICATION_ID, mBuilder.build());
     }
 }

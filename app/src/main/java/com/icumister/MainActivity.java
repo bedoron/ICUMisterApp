@@ -1,6 +1,11 @@
 package com.icumister;
 
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -9,8 +14,8 @@ import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
-import com.google.android.gms.gcm.GoogleCloudMessaging;
 import com.icumister.icumisterapp.R;
+import com.icumister.notification.Constants;
 import com.icumister.notification.MyHandler;
 import com.icumister.notification.NotificationSettings;
 import com.icumister.notification.RegistrationIntentService;
@@ -20,8 +25,6 @@ public class MainActivity extends AppCompatActivity {
 
     public static MainActivity mainActivity;
     public static Boolean isVisible = false;
-    private GoogleCloudMessaging gcm;
-    private static final int PLAY_SERVICES_RESOLUTION_REQUEST = 9000;
     private static final String TAG = "MainActivity";
 
     @Override
@@ -29,9 +32,41 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        mainActivity = this;
+        setupNotificationChannel(getNotificationChannelParameters());
         NotificationsManager.handleNotifications(this, NotificationSettings.SenderId, MyHandler.class);
         registerWithNotificationHubs();
+
+        mainActivity = this;
+    }
+
+    private NotifParams getNotificationChannelParameters() {
+        return new NotifParams();
+    }
+
+    private void setupNotificationChannel(NotifParams notificationParameters) {
+        NotificationManager notificationsManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+        if (notificationsManager == null) {
+            Log.w(TAG, "Couldn't get Notification Service");
+            return;
+        }
+
+        String notificationChannelName = getString(R.string.notification_channel_name);
+        int notificationChannelImportance;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            notificationChannelImportance = NotificationManager.IMPORTANCE_LOW;
+        } else {
+            notificationChannelImportance = 0;
+        }
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            NotificationChannel notificationChannel = new NotificationChannel(Constants.NOTIFICATION_CHANNEL_ID, notificationChannelName, notificationChannelImportance);
+            notificationChannel.setDescription(notificationParameters.notificationChannelDescription);
+            notificationChannel.enableLights(notificationParameters.enableLights);
+            notificationChannel.setLightColor(notificationParameters.lightColor);
+            notificationChannel.enableVibration(notificationParameters.enableVibration);
+            notificationChannel.setVibrationPattern(notificationParameters.vibrationPattern);
+            notificationsManager.createNotificationChannel(notificationChannel);
+        }
     }
 
     /**
@@ -44,7 +79,7 @@ public class MainActivity extends AppCompatActivity {
         int resultCode = apiAvailability.isGooglePlayServicesAvailable(this);
         if (resultCode != ConnectionResult.SUCCESS) {
             if (apiAvailability.isUserResolvableError(resultCode)) {
-                apiAvailability.getErrorDialog(this, resultCode, PLAY_SERVICES_RESOLUTION_REQUEST)
+                apiAvailability.getErrorDialog(this, resultCode, Constants.PLAY_SERVICES_RESOLUTION_REQUEST)
                         .show();
             } else {
                 Log.i(TAG, "This device is not supported by Google Play Services.");
@@ -95,9 +130,17 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void run() {
                 Toast.makeText(MainActivity.this, notificationMessage, Toast.LENGTH_LONG).show();
-                TextView helloText = (TextView) findViewById(R.id.text_hello);
+                TextView helloText = findViewById(R.id.text_hello);
                 helloText.setText(notificationMessage);
             }
         });
+    }
+
+    private class NotifParams {
+        private String notificationChannelDescription = "Default";
+        private boolean enableLights = true;
+        private int lightColor = Color.RED;
+        private boolean enableVibration = true;
+        private long[] vibrationPattern = new long[]{100, 100, 100, 300, 300, 300, 100 ,100, 100};
     }
 }
