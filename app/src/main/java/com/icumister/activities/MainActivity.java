@@ -16,8 +16,9 @@ import android.widget.TextView;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
 import com.icumister.icumisterapp.R;
+import com.icumister.Constants;
 import com.icumister.icumisterapp.SettingsActivity;
-import com.icumister.notification.Constants;
+
 import com.icumister.notification.MyHandler;
 import com.icumister.notification.NotificationSettings;
 import com.icumister.notification.RegistrationIntentService;
@@ -143,7 +144,7 @@ public class MainActivity extends AppCompatActivity {
                     public void run(){
                         TextView helloText = findViewById(R.id.text_hello);
                         helloText.setText("");
-                    }
+            }
                 }, 10000);
             }
         });

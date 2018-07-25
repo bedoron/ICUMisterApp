@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 
+import com.icumister.Constants;
 import com.icumister.activities.MainActivity;
 import com.icumister.AppState;
 import com.icumister.icumisterapp.R;

@@ -11,8 +11,12 @@
     <permission
         android:name="com.icumister.permission.C2D_MESSAGE"
         android:protectionLevel="signature" />
+    <permission
+        android:name="com.icumister.permission.WRITE_EXTERNAL_STORAGE"
+        android:protectionLevel="signature" />
 
     <uses-permission android:name="com.icumister.permission.C2D_MESSAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application
         android:allowBackup="true"
@@ -74,6 +78,16 @@
                 <category android:name="com.icumister" />
             </intent-filter>
         </receiver>
+
+        <provider
+            android:name="android.support.v4.content.FileProvider"
+            android:authorities="com.icumister.fileprovider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths" />
+        </provider>
     </application>
 
 </manifest>
