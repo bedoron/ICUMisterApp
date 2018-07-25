@@ -7,6 +7,8 @@
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
+    <uses-permission android:name="com.icumister.permission.C2D_MESSAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <permission
         android:name="com.icumister.permission.C2D_MESSAGE"
@@ -14,9 +16,6 @@
     <permission
         android:name="com.icumister.permission.WRITE_EXTERNAL_STORAGE"
         android:protectionLevel="signature" />
-
-    <uses-permission android:name="com.icumister.permission.C2D_MESSAGE" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application
         android:allowBackup="true"
@@ -35,27 +34,21 @@
         </activity>
 
         <activity
+            android:name="com.icumister.activities.SettingsActivity"
+            android:label="@string/settings"
+            android:parentActivityName="com.icumister.activities.MainActivity" />
+        <activity
             android:name="com.icumister.activities.AddKnownPersonActivity"
             android:label="@string/header_add_yourself"
             android:parentActivityName="com.icumister.activities.MainActivity" />
 
+        <activity
+            android:name="com.icumister.notification.NotificationFiltersActivity"
+            android:label="Notifications settings"
+            android:parentActivityName="com.icumister.activities.SettingsActivity" />
+
         <meta-data
             android:name="com.google.android.gms.version"
-
-        <activity
-            android:name="com.icumister.icumisterapp.NotificationFiltersActivity"
-            android:label="Notifications settings"
-            android:parentActivityName="com.icumister.icumisterapp.SettingsActivity">
-        </activity>
-
-        <activity
-            android:name="com.icumister.icumisterapp.SettingsActivity"
-            android:label="Settings"
-            android:parentActivityName="com.icumister.MainActivity">
-        </activity>
-
-
-        <meta-data android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
 
         <service

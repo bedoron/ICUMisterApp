@@ -17,7 +17,6 @@ import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
 import com.icumister.icumisterapp.R;
 import com.icumister.Constants;
-import com.icumister.icumisterapp.SettingsActivity;
 
 import com.icumister.notification.MyHandler;
 import com.icumister.notification.NotificationSettings;
@@ -148,11 +147,6 @@ public class MainActivity extends AppCompatActivity {
                 }, 10000);
             }
         });
-    }
-
-    public void startAddYouselfActivity(View view) {
-        Intent addYourselfIntent = new Intent(this, AddKnownPersonActivity.class);
-        startActivity(addYourselfIntent);
     }
 
     private class NotifParams {

@@ -1,4 +1,4 @@
-package com.icumister.icumisterapp;
+package com.icumister.notification;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.RadioGroup;
 
 import com.icumister.AppState;
+import com.icumister.icumisterapp.R;
 import com.icumister.notification.NotificationFilter;
 
 public class NotificationFiltersActivity extends AppCompatActivity {

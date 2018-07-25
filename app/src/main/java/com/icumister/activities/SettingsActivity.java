@@ -1,11 +1,12 @@
-package com.icumister.icumisterapp;
+package com.icumister.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
-import com.icumister.MainActivity;
+import com.icumister.icumisterapp.R;
+import com.icumister.notification.NotificationFiltersActivity;
 
 public class SettingsActivity extends AppCompatActivity {
 
@@ -15,14 +16,19 @@ public class SettingsActivity extends AppCompatActivity {
         setContentView(R.layout.settings);
     }
 
-    public void openNotificationFiltersActivity(View view)
+    public void startNotificationFiltersActivity(View view)
     {
         Intent intent = new Intent(SettingsActivity.this, NotificationFiltersActivity.class);
         startActivity(intent);
     }
 
-    public void openQuickAssist(View view) {
+    public void startQuickAssistActivity(View view) {
         //Intent intent = new Intent(MainActivity.this, NotificationFiltersActivity.class);
         //startActivity(intent);
+    }
+
+    public void startKnownPersonActivity(View view) {
+        Intent addYourselfIntent = new Intent(this, AddKnownPersonActivity.class);
+        startActivity(addYourselfIntent);
     }
 }

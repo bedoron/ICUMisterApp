@@ -18,7 +18,7 @@
         app:layout_constraintVertical_bias="0.967" />
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/button_settings"
         style="@style/Widget.AppCompat.Button.Colored"
         android:layout_width="205dp"
         android:layout_height="64dp"
@@ -32,18 +32,6 @@
         android:visibility="visible"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.503"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <Button
-        android:id="@+id/button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:onClick="startAddYouselfActivity"
-        android:text="Add yourself"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -89,12 +77,12 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:background="@android:color/holo_green_light"
-        android:onClick="openQuickAssist"
+        android:onClick="startQuickAssistActivity"
         android:text="Quick Assist"
         android:textAppearance="@style/TextAppearance.AppCompat.Caption"
         android:textSize="45sp"
         android:visibility="visible"
-        app:layout_constraintBottom_toTopOf="@+id/button"
+        app:layout_constraintBottom_toTopOf="@+id/button_settings"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView" />
