@@ -15,6 +15,7 @@ import android.widget.TextView;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
+import com.icumister.icumisterapp.QuickAssistActivity;
 import com.icumister.icumisterapp.R;
 import com.icumister.Constants;
 
@@ -47,6 +48,11 @@ public class MainActivity extends AppCompatActivity {
 
     public void openSettingsActivity(View view) {
         Intent intent = new Intent(MainActivity.this, SettingsActivity.class);
+        startActivity(intent);
+    }
+
+    public void openQuickAssist(View view) {
+        Intent intent = new Intent(MainActivity.this, QuickAssistActivity.class);
         startActivity(intent);
     }
 

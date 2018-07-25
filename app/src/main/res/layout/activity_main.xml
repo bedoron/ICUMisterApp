@@ -61,7 +61,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:background="@android:color/holo_green_light"
-        android:onClick="startQuickAssistActivity"
+        android:onClick="openQuickAssist"
         android:text="Quick Assist"
         android:textAppearance="@style/TextAppearance.AppCompat.Caption"
         android:textSize="45sp"
