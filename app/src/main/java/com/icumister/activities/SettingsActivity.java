@@ -31,4 +31,9 @@ public class SettingsActivity extends AppCompatActivity {
         Intent addYourselfIntent = new Intent(this, AddKnownPersonActivity.class);
         startActivity(addYourselfIntent);
     }
+
+    public void openCurrentStatus(View view) {
+        Intent intent = new Intent(SettingsActivity.this, CurrentStatusActivity.class);
+        startActivity(intent);
+    }
 }

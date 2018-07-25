@@ -12,12 +12,26 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="16dp"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="64dp"
+        android:layout_marginTop="8dp"
         android:onClick="openAccountActivity"
         android:text="Account"
         android:visibility="visible"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/button_get_current_status"
+        style="@style/Widget.AppCompat.Button.Colored"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:onClick="openCurrentStatus"
+        android:text="Get current status"
+        android:visibility="visible"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/button_add_known_person" />
 
     <Button
         android:id="@+id/notification_settings"
@@ -34,7 +48,7 @@
         app:layout_constraintTop_toBottomOf="@+id/button_account" />
 
     <Button
-        android:id="@+id/button_add_yourself"
+        android:id="@+id/button_add_known_person"
         style="@style/Widget.AppCompat.Button.Colored"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -42,7 +56,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
         android:onClick="startKnownPersonActivity"
-        android:text="Add yourself"
+        android:text="Add known person"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/notification_settings" />
 </android.support.constraint.ConstraintLayout>

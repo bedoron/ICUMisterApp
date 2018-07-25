@@ -4,6 +4,7 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Bundle;
@@ -12,9 +13,10 @@ import android.util.Log;
 
 import com.icumister.Constants;
 import com.icumister.activities.MainActivity;
-import com.icumister.AppState;
 import com.icumister.icumisterapp.R;
 import com.microsoft.windowsazure.notifications.NotificationsHandler;
+
+import java.util.Random;
 
 public class MyHandler extends NotificationsHandler {
 
@@ -31,15 +33,14 @@ public class MyHandler extends NotificationsHandler {
                     + notification.getMsg() + "\r\n"
                     + notification.getUrl() + "\r\n"
                     + notification.getTime_elapsed());
-            if(NotificationFilter.matchedNotification(notification)) {
+            if (NotificationFilter.matchedNotification(notification)) {
                 sendNotification(notification);
                 MainActivity.mainActivity.ToastNotify("Received a notification for " + notification.getNotifType().toString());
-        }
-            else {
+            } else {
                 bundle.clear();
                 Log.w("MyHandler", "Received filtered notification");
-    }
-        } catch(Exception e) {
+            }
+        } catch (Exception e) {
             Log.e("MyHandler", "Received illegal notification", e);
         }
     }
@@ -55,16 +56,27 @@ public class MyHandler extends NotificationsHandler {
         PendingIntent contentIntent = PendingIntent.getActivity(ctx, 0,
                 i, PendingIntent.FLAG_CANCEL_CURRENT);
         Uri defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
-        NotificationCompat.Builder mBuilder =
-                new NotificationCompat.Builder(ctx, Constants.NOTIFICATION_CHANNEL_ID)
-                        .setSmallIcon(R.mipmap.ic_launcher)
-                        .setContentTitle("ICUMISTER")
-                        .setStyle(new NotificationCompat.BigTextStyle()
-                                .bigText(notification.getMsg()))
-                        .setSound(defaultSoundUri)
-                        .setContentText(notification.getMsg());
-
+        NotificationCompat.Builder mBuilder;
+        if (notification.getNotifType() == Notification.NotifType.UNKNOWN) {
+            mBuilder = new NotificationCompat.Builder(ctx, Constants.NOTIFICATION_CHANNEL_ID)
+                    .setSmallIcon(R.drawable.badnotif)
+                    .setContentTitle("Unknown person alert")
+                    .setStyle(new NotificationCompat.BigTextStyle()
+                            .bigText(notification.getMsg()))
+                    .setSound(defaultSoundUri)
+                    .setColor(Color.RED)
+                    .setContentText(notification.getMsg());
+        } else {
+            mBuilder = new NotificationCompat.Builder(ctx, Constants.NOTIFICATION_CHANNEL_ID)
+                    .setSmallIcon(R.drawable.goodnotif)
+                    .setContentTitle("Known person alert")
+                    .setStyle(new NotificationCompat.BigTextStyle()
+                            .bigText(notification.getMsg()))
+                    .setSound(defaultSoundUri)
+                    .setColor(Color.GREEN)
+                    .setContentText(notification.getMsg());
+        }
         mBuilder.setContentIntent(contentIntent);
-        mNotificationManager.notify(Constants.NOTIFICATION_ID, mBuilder.build());
+        mNotificationManager.notify(new Random().nextInt(9999 - 1000) + 1000, mBuilder.build());
     }
 }
