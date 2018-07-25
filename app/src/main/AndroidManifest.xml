@@ -54,7 +54,7 @@
             android:parentActivityName="com.icumister.activities.SettingsActivity" />
 
         <activity
-            android:name="com.icumister.icumisterapp.QuickAssistActivity"
+            android:name="com.icumister.activities.QuickAssistActivity"
             android:label="Quick assist"
             android:parentActivityName="com.icumister.activities.MainActivity" />
 

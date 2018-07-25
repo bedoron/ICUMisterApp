@@ -15,7 +15,6 @@ import android.widget.TextView;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
-import com.icumister.icumisterapp.QuickAssistActivity;
 import com.icumister.icumisterapp.R;
 import com.icumister.Constants;
 
