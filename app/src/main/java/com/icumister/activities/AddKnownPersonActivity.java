@@ -7,7 +7,10 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
@@ -19,24 +22,43 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ImageView;
 
 import com.icumister.Constants;
 import com.icumister.icumisterapp.R;
+import com.icumister.network.CallAPI;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.io.ByteArrayOutputStream;
+import java.io.DataOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.charset.StandardCharsets;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.UUID;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
 
 public class AddKnownPersonActivity extends AppCompatActivity {
     private static final int REQUEST_TAKE_PHOTO = 1;
     private static final int PICK_IMAGE = 2;
     private static final String TAG = "AddKnownPerson";
+    private static final DialogInterface.OnClickListener DO_NOTHIN_LISTENER = new DialogInterface.OnClickListener() {
+        @Override
+        public void onClick(DialogInterface dialog, int which) {
+            // Do nothing
+        }
+    };
+
     private ImageView personImageView = null;
     private static String picturePath;
     private AppCompatActivity addKnownPersonActivity;
@@ -88,8 +110,82 @@ public class AddKnownPersonActivity extends AppCompatActivity {
         startActivityForResult(capturePictureIntent, REQUEST_TAKE_PHOTO);
     }
 
-    public void sendDetailsToServer(View view) {
+    public byte[] drawableToBytes(String boundary, Drawable drawable) throws IOException {
+        if (!(drawable instanceof BitmapDrawable)) {
+            Log.w(TAG, "Picture is not BitmapDrawable");
+            return null;
+        }
 
+        BitmapDrawable bitmapDrawable = ((BitmapDrawable) drawable);
+        Bitmap bitmap = bitmapDrawable.getBitmap();
+
+        ByteArrayOutputStream stream = new ByteArrayOutputStream();
+        stream.write(("--" + boundary + "\r\n").getBytes());
+        stream.write("Content-Type: image/jpeg\r\n".getBytes());
+        stream.write("Content-Disposition: form-data; name=\"file\";filename=\"known_person.jpeg\"\r\n".getBytes());
+        stream.write("\r\n".getBytes());
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream);
+        stream.write("\r\n".getBytes());
+        stream.write(("--" + boundary + "--\r\n").getBytes());
+
+        return stream.toByteArray();
+    }
+
+    public void sendDetailsToServer(View view) {
+        String name = ((EditText) findViewById(R.id.your_name)).getText().toString();
+
+        AsyncTask asyncTask;
+        Map<String, List<String>> headers;
+
+        asyncTask = new CallAPI(Constants.BACKEND_URL_PERSON_CREATE).execute(("name=" + name).getBytes());
+        try {
+            headers = (Map<String, List<String>>) asyncTask.get(60, TimeUnit.SECONDS);
+        } catch (InterruptedException | ExecutionException | TimeoutException e) {
+            e.printStackTrace();
+            showMessage("Network Error", "Failed to send add person");
+            return;
+        }
+
+        if (headers == null) {
+            showMessage("Network Error", "Failed to send add person");
+            return;
+        }
+
+        String personId = headers.get("X-Person-ID").get(0);
+
+        Map<String, String> reqProps = new HashMap<>();
+        reqProps.put("Connection", "Keep-Alive");
+        reqProps.put("Cache-Control", "no-cache");
+        String boundary = UUID.randomUUID().toString();
+        reqProps.put("Content-Type", "multipart/form-data;boundary=" + boundary);
+        try {
+            byte[] data = drawableToBytes(boundary, personImageView.getDrawable());
+
+            if (data == null) {
+                return;
+            }
+
+            asyncTask = new CallAPI(Constants.BACKEND_URL_FACE_CREATE + "?id=" + personId, reqProps).execute(data);
+            headers = (Map<String, List<String>>) asyncTask.get(60, TimeUnit.SECONDS);
+        } catch (InterruptedException | ExecutionException | TimeoutException | IOException e) {
+            e.printStackTrace();
+            showMessage("Error", "Failed to send add person");
+            return;
+        }
+
+        if (headers == null || (headers.get(null) != null && headers.get(null).get(0).equalsIgnoreCase("HTTP/1.1 500 INTERNAL SERVER ERROR"))) {
+            showMessage("Network Error", "Failed to send add person");
+            return;
+        }
+        showMessage("Info", "Person was successfully added");
+    }
+
+    private void showMessage(String title, String message) {
+        new AlertDialog.Builder(this)
+                .setTitle(title)
+                .setMessage(message)
+                .setPositiveButton("Close", DO_NOTHIN_LISTENER)
+                .show();
     }
 
     @Override

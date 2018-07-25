@@ -40,8 +40,8 @@
             android:parentActivityName="com.icumister.activities.MainActivity" />
         <activity
             android:name="com.icumister.activities.AddKnownPersonActivity"
-            android:label="@string/header_add_yourself"
-            android:parentActivityName="com.icumister.activities.SettingsActivity" />
+            android:label="@string/header_add_known_person"
+            android:parentActivityName="com.icumister.activities.MainActivity" />
 
         <activity
             android:name="com.icumister.notification.NotificationFiltersActivity"
