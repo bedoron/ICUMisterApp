@@ -12,11 +12,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
-import com.icumister.icumisterapp.NotificationFiltersActivity;
 import com.icumister.icumisterapp.R;
 import com.icumister.icumisterapp.SettingsActivity;
 import com.icumister.notification.Constants;
@@ -24,8 +22,6 @@ import com.icumister.notification.MyHandler;
 import com.icumister.notification.NotificationSettings;
 import com.icumister.notification.RegistrationIntentService;
 import com.microsoft.windowsazure.notifications.NotificationsManager;
-
-import java.util.Set;
 
 public class MainActivity extends AppCompatActivity {
 

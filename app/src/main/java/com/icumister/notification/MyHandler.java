@@ -30,11 +30,9 @@ public class MyHandler extends NotificationsHandler {
                     + notification.getMsg() + "\r\n"
                     + notification.getUrl() + "\r\n"
                     + notification.getTime_elapsed());
-            if(notification.getNotifType().toString().equals(AppState.notificationFilter.name())) {
+            if(NotificationFilter.matchedNotification(notification)) {
                 sendNotification(notification);
-                if (MainActivity.isVisible) {
-                    MainActivity.mainActivity.ToastNotify("Received a notification for " + notification.getNotifType().toString());
-                }
+                MainActivity.mainActivity.ToastNotify("Received a notification for " + notification.getNotifType().toString());
             }
             else {
                 bundle.clear();
