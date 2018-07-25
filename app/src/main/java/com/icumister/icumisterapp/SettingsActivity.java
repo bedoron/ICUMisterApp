@@ -25,4 +25,9 @@ public class SettingsActivity extends AppCompatActivity {
         //Intent intent = new Intent(MainActivity.this, NotificationFiltersActivity.class);
         //startActivity(intent);
     }
+
+    public void openCurrentStatus(View view) {
+        Intent intent = new Intent(SettingsActivity.this, CurrentStatusActivity.class);
+        startActivity(intent);
+    }
 }

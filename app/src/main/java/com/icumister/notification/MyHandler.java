@@ -4,13 +4,13 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 
-import com.icumister.AppState;
 import com.icumister.MainActivity;
 import com.icumister.icumisterapp.R;
 import com.microsoft.windowsazure.notifications.NotificationsHandler;
@@ -54,15 +54,27 @@ public class MyHandler extends NotificationsHandler {
         PendingIntent contentIntent = PendingIntent.getActivity(ctx, 0,
                 i, PendingIntent.FLAG_CANCEL_CURRENT);
         Uri defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
-        NotificationCompat.Builder mBuilder =
-                new NotificationCompat.Builder(ctx, Constants.NOTIFICATION_CHANNEL_ID)
-                        .setSmallIcon(R.mipmap.ic_launcher)
-                        .setContentTitle("ICUMISTER")
-                        .setStyle(new NotificationCompat.BigTextStyle()
-                                .bigText(notification.getMsg()))
-                        .setSound(defaultSoundUri)
-                        .setContentText(notification.getMsg());
-
+        NotificationCompat.Builder mBuilder;
+        if(notification.getNotifType() == Notification.NotifType.UNKNOWN) {
+            mBuilder = new NotificationCompat.Builder(ctx, Constants.NOTIFICATION_CHANNEL_ID)
+                            .setSmallIcon(R.drawable.badnotif)
+                            .setContentTitle("ICUMISTER")
+                            .setStyle(new NotificationCompat.BigTextStyle()
+                                    .bigText(notification.getMsg()))
+                            .setSound(defaultSoundUri)
+                            .setColor(Color.RED)
+                            .setContentText(notification.getMsg());
+        }
+        else {
+            mBuilder = new NotificationCompat.Builder(ctx, Constants.NOTIFICATION_CHANNEL_ID)
+                    .setSmallIcon(R.drawable.goodnotif)
+                    .setContentTitle("ICUMISTER")
+                    .setStyle(new NotificationCompat.BigTextStyle()
+                            .bigText(notification.getMsg()))
+                    .setSound(defaultSoundUri)
+                    .setColor(Color.GREEN)
+                    .setContentText(notification.getMsg());
+        }
         mBuilder.setContentIntent(contentIntent);
         mNotificationManager.notify(Constants.NOTIFICATION_ID, mBuilder.build());
     }

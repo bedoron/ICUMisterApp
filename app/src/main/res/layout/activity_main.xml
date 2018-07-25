@@ -28,7 +28,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="428dp"
         android:onClick="openSettingsActivity"
-        android:text="Settings"
+        android:text="Options"
         android:visibility="visible"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.503"
