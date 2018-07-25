@@ -33,22 +33,22 @@ import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class AddYourselfActivity extends AppCompatActivity {
+public class AddKnownPersonActivity extends AppCompatActivity {
     private static final int REQUEST_TAKE_PHOTO = 1;
     private static final int PICK_IMAGE = 2;
-    private static final String TAG = "AddYourself";
-    private ImageView yourImageView = null;
-    private static String yourPicturePath;
-    private AppCompatActivity addYourselfActivity;
+    private static final String TAG = "AddKnownPerson";
+    private ImageView personImageView = null;
+    private static String picturePath;
+    private AppCompatActivity addKnownPersonActivity;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_yourself);
-        addYourselfActivity = this;
-        yourImageView = findViewById(R.id.yourImage);
-        if (yourPicturePath != null) {
-            yourImageView.setImageBitmap(getBitmapFromFile(yourPicturePath));
+        setContentView(R.layout.activity_add_known_person);
+        addKnownPersonActivity = this;
+        personImageView = findViewById(R.id.person_image);
+        if (picturePath != null) {
+            personImageView.setImageBitmap(getBitmapFromFile(picturePath));
         }
     }
 
@@ -84,15 +84,19 @@ public class AddYourselfActivity extends AppCompatActivity {
 
         Uri photoURI = FileProvider.getUriForFile(this, "com.icumister.fileprovider", photoFile);
         capturePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
-        yourPicturePath = photoFile.getAbsolutePath();
+        picturePath = photoFile.getAbsolutePath();
         startActivityForResult(capturePictureIntent, REQUEST_TAKE_PHOTO);
+    }
+
+    public void sendDetailsToServer(View view) {
+
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == REQUEST_TAKE_PHOTO && resultCode == RESULT_OK) {
-            Bitmap picture = getBitmapFromFile(yourPicturePath);
-            yourImageView.setImageBitmap(picture);
+            Bitmap picture = getBitmapFromFile(picturePath);
+            personImageView.setImageBitmap(picture);
             return;
         }
 
@@ -105,7 +109,7 @@ public class AddYourselfActivity extends AppCompatActivity {
 
                 InputStream inputStream = this.getContentResolver().openInputStream(data.getData());
                 Bitmap picture = BitmapFactory.decodeStream(inputStream);
-                yourImageView.setImageBitmap(picture);
+                personImageView.setImageBitmap(picture);
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
             }
@@ -133,7 +137,7 @@ public class AddYourselfActivity extends AppCompatActivity {
                     .setPositiveButton("Sure", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
-                            ActivityCompat.requestPermissions(addYourselfActivity, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, Constants.PERMISSIONS_REQUEST_WRITE_EXTERNAL_STORAGE);
+                            ActivityCompat.requestPermissions(addKnownPersonActivity, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, Constants.PERMISSIONS_REQUEST_WRITE_EXTERNAL_STORAGE);
                         }
                     })
                     .show();
@@ -149,7 +153,7 @@ public class AddYourselfActivity extends AppCompatActivity {
         String imageFileName = "JPEG_" + timeStamp + "_";
         File publicImageDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
         File image = File.createTempFile(imageFileName, ".jpg", publicImageDir);
-        yourPicturePath = image.getAbsolutePath();
+        picturePath = image.getAbsolutePath();
         return image;
     }
 

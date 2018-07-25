@@ -35,7 +35,7 @@
         </activity>
 
         <activity
-            android:name="com.icumister.activities.AddYourselfActivity"
+            android:name="com.icumister.activities.AddKnownPersonActivity"
             android:label="@string/header_add_yourself"
             android:parentActivityName="com.icumister.activities.MainActivity" />
 

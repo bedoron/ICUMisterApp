@@ -5,7 +5,8 @@
     <string name="header_add_yourself">Add yourself</string>
     <string name="hint_enter_your_name">Enter your name</string>
     <string name="content_description_yourself">Yourself</string>
-    <string name="label_camera">Camera</string>
+    <string name="label_capture">Capture</string>
     <string name="text_failed_to_caputre_picture">Failed to capture picture</string>
     <string name="text_camera_error">Camera error</string>
+    <string name="label_send">Send</string>
 </resources>

@@ -151,7 +151,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void startAddYouselfActivity(View view) {
-        Intent addYourselfIntent = new Intent(this, AddYourselfActivity.class);
+        Intent addYourselfIntent = new Intent(this, AddKnownPersonActivity.class);
         startActivity(addYourselfIntent);
     }
 
