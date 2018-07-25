@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -139,9 +140,15 @@ public class MainActivity extends AppCompatActivity {
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                //Toast.makeText(MainActivity.this, notificationMessage, Toast.LENGTH_LONG).show();
                 TextView helloText = findViewById(R.id.text_hello);
                 helloText.setText(notificationMessage);
+                Handler h=new Handler();
+                h.postDelayed(new Runnable(){
+                    public void run(){
+                        TextView helloText = findViewById(R.id.text_hello);
+                        helloText.setText("");
+                    }
+                }, 10000);
             }
         });
     }

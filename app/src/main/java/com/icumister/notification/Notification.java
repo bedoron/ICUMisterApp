@@ -12,7 +12,7 @@ public class Notification {
 
     public Notification(Bundle bundle) {
         this.msg = bundle.getString("msg");
-        this.notifType = NotifType.valueOf(bundle.getString("type"));
+        this.notifType = NotifType.valueOf(bundle.getString("type").toUpperCase());
         this.url = bundle.getString("url");
         this.time_elapsed = Integer.valueOf(bundle.getString("time_elapsed"));
     }

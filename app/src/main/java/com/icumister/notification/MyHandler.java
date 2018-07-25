@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 
+import com.icumister.AppState;
 import com.icumister.MainActivity;
 import com.icumister.icumisterapp.R;
 import com.microsoft.windowsazure.notifications.NotificationsHandler;
@@ -24,12 +25,23 @@ public class MyHandler extends NotificationsHandler {
         ctx = context;
         try {
             Notification notification = new Notification(bundle);
-            sendNotification(notification);
-            if (MainActivity.isVisible) {
-                MainActivity.mainActivity.ToastNotify("Received a notification for " + notification.getNotifType().toString());
+            Log.i("MyHandler", "\r\nNotification: \r\n"
+                    + notification.getNotifType().toString() + "\r\n"
+                    + notification.getMsg() + "\r\n"
+                    + notification.getUrl() + "\r\n"
+                    + notification.getTime_elapsed());
+            if(notification.getNotifType().toString().equals(AppState.notificationFilter.name())) {
+                sendNotification(notification);
+                if (MainActivity.isVisible) {
+                    MainActivity.mainActivity.ToastNotify("Received a notification for " + notification.getNotifType().toString());
+                }
+            }
+            else {
+                bundle.clear();
+                Log.w("MyHandler", "Received filtered notification");
             }
         } catch(Exception e) {
-            Log.e("MyHandler", "Received illegal notification");
+            Log.e("MyHandler", "Received illegal notification", e);
         }
     }
 
@@ -42,7 +54,7 @@ public class MyHandler extends NotificationsHandler {
                 ctx.getSystemService(Context.NOTIFICATION_SERVICE);
 
         PendingIntent contentIntent = PendingIntent.getActivity(ctx, 0,
-                i, PendingIntent.FLAG_ONE_SHOT);
+                i, PendingIntent.FLAG_CANCEL_CURRENT);
         Uri defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
         NotificationCompat.Builder mBuilder =
                 new NotificationCompat.Builder(ctx, Constants.NOTIFICATION_CHANNEL_ID)
