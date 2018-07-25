@@ -15,6 +15,8 @@ import com.icumister.MainActivity;
 import com.icumister.icumisterapp.R;
 import com.microsoft.windowsazure.notifications.NotificationsHandler;
 
+import java.util.Random;
+
 public class MyHandler extends NotificationsHandler {
 
     private NotificationManager mNotificationManager;
@@ -58,7 +60,7 @@ public class MyHandler extends NotificationsHandler {
         if(notification.getNotifType() == Notification.NotifType.UNKNOWN) {
             mBuilder = new NotificationCompat.Builder(ctx, Constants.NOTIFICATION_CHANNEL_ID)
                             .setSmallIcon(R.drawable.badnotif)
-                            .setContentTitle("ICUMISTER")
+                            .setContentTitle("Unknown person alert")
                             .setStyle(new NotificationCompat.BigTextStyle()
                                     .bigText(notification.getMsg()))
                             .setSound(defaultSoundUri)
@@ -68,7 +70,7 @@ public class MyHandler extends NotificationsHandler {
         else {
             mBuilder = new NotificationCompat.Builder(ctx, Constants.NOTIFICATION_CHANNEL_ID)
                     .setSmallIcon(R.drawable.goodnotif)
-                    .setContentTitle("ICUMISTER")
+                    .setContentTitle("Known person alert")
                     .setStyle(new NotificationCompat.BigTextStyle()
                             .bigText(notification.getMsg()))
                     .setSound(defaultSoundUri)
@@ -76,6 +78,6 @@ public class MyHandler extends NotificationsHandler {
                     .setContentText(notification.getMsg());
         }
         mBuilder.setContentIntent(contentIntent);
-        mNotificationManager.notify(Constants.NOTIFICATION_ID, mBuilder.build());
+        mNotificationManager.notify(new Random().nextInt(9999 - 1000) + 1000, mBuilder.build());
     }
 }
